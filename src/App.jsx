@@ -10,19 +10,18 @@ import { createProduct, removeProduct } from "./store/productSlice";
 import { createCart } from "./store/cartSlice";
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    authService
-      .getCurrentUser()
-      .then((userData) => {
-        if (userData) {
-          const admin = userData.labels && userData.labels.includes("admin");
-          dispatch(authLogin({ userData, admin }));
-        } else dispatch(logout());
-      })
-      .finally(() => setLoading(false));
+    // setLoading(true)
+    authService.getCurrentUser().then((userData) => {
+      if (userData) {
+        const admin = userData.labels && userData.labels.includes("admin");
+        dispatch(authLogin({ userData, admin }));
+      } else dispatch(logout());
+    });
+    // .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
